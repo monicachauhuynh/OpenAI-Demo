@@ -3,6 +3,16 @@ import React, { useState } from "react";
 const Prompt = () => {
   const [formData, setFormData] = useState({});
   const [responseSuccess, setResponseSuccess] = useState(false);
+  const [responses, setResponses] = useState([]);
+  let choices = [];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -15,27 +25,36 @@ const Prompt = () => {
       },
       body: JSON.stringify(formData),
     };
-    fetch(
+
+    const fetchChoices = fetch(
       "https://api.openai.com/v1/engines/text-curie-001/completions",
       requestOptions
     )
       .then((response) => {
-        console.log(response);
-        response.json();
         if (response.status === 200) {
           setResponseSuccess(true);
         }
+        return response.json();
       })
-      .then((data) => console.log(data));
+      .then((data) => {
+        return data.choices;
+      });
+
+    const getChoices = async () => {
+      choices = await fetchChoices;
+      setResponses(choices);
+      console.log(choices);
+    };
+
+    getChoices();
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const listItems = responses.map((obj) => (
+    <li key={obj.index}>
+      <p>Prompt: {formData.prompt}</p>
+      <p>Response: {obj.text}</p>
+    </li>
+  ));
 
   return (
     <div>
@@ -59,10 +78,7 @@ const Prompt = () => {
       {responseSuccess && (
         <div>
           <h2>Responses</h2>
-          <div>
-            <p>Prompt: {formData.prompt}</p>
-            <p>Response:</p>
-          </div>
+          <ul>{listItems}</ul>
         </div>
       )}
     </div>
