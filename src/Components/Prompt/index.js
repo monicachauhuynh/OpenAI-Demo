@@ -1,4 +1,26 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+
+const InputPrompt = styled.textarea`
+  height: 20vh;
+  width: 60vw;
+  resize: none;
+  font-family: Poppins;
+  border: transparent;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  padding: 2rem;
+`;
+const SubmitButton = styled.button`
+  height: 2rem;
+  width: 8rem;
+  font-family: Poppins;
+  text-align: center;
+  align-self: center;
+  border: transparent;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+`;
 
 const Prompt = () => {
   const [formData, setFormData] = useState({});
@@ -62,21 +84,21 @@ const Prompt = () => {
         <div>
           <h1>Fun with AI</h1>
           <label>Enter Prompt</label>
-          <div>
-            <textarea
+          <div style={{ marginTop: "1rem" }}>
+            <InputPrompt
               id="prompt"
               name="prompt"
               onChange={handleInputChange}
               value={formData.prompt}
-            ></textarea>
+            ></InputPrompt>
           </div>
-          <div>
-            <button id="submitButton">SUBMIT</button>
+          <div style={{ marginTop: "1rem" }}>
+            <SubmitButton id="submitButton">SUBMIT</SubmitButton>
           </div>
         </div>
       </form>
       {responseSuccess && (
-        <div>
+        <div style={{ marginTop: "2rem" }}>
           <h2>Responses</h2>
           <ul>{listItems}</ul>
         </div>
