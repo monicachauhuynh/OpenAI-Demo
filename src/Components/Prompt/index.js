@@ -2,22 +2,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const InputPrompt = styled.textarea`
-  height: 20vh;
+  height: 15vh;
   width: 60vw;
   resize: none;
   font-family: Poppins;
   border: transparent;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   padding: 2rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  &:focus {
+    outline: gray;
+  }
 `;
 const SubmitButton = styled.button`
   height: 2rem;
   width: 8rem;
   font-family: Poppins;
   text-align: center;
+  color: whitesmoke;
+  background: #383838;
   align-self: center;
-  border: transparent;
+  border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
 `;
@@ -33,6 +38,12 @@ const Prompt = () => {
     setFormData({
       ...formData,
       [name]: value,
+      temperature: 0.5,
+      max_tokens: 64,
+      top_p: 1.0,
+      echo: true,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
     });
   };
 
@@ -73,8 +84,8 @@ const Prompt = () => {
 
   const listItems = responses.map((obj) => (
     <li key={obj.index}>
-      <p>Prompt: {formData.prompt}</p>
-      <p>Response: {obj.text}</p>
+      <p>Prompt: {obj.text.split("\n\n")[0]}</p>
+      <p>Response: {obj.text.split("\n\n")[1]}</p>
     </li>
   ));
 
