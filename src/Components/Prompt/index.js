@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const InputPrompt = styled.textarea`
@@ -41,9 +41,13 @@ const ResponseListItem = styled.li`
 `;
 
 const Prompt = () => {
+  const persistResponses = JSON.parse(localStorage.getItem("responses")) || [];
   const [formData, setFormData] = useState({});
-  const [responseSuccess, setResponseSuccess] = useState(false);
-  const [responses, setResponses] = useState([]);
+  const [responses, setResponses] = useState(persistResponses);
+
+  useEffect(() => {
+    localStorage.setItem("responses", JSON.stringify(responses));
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -74,9 +78,6 @@ const Prompt = () => {
       requestOptions
     )
       .then((response) => {
-        if (response.status === 200) {
-          setResponseSuccess(true);
-        }
         return response.json();
       })
       .then((data) => {
@@ -130,7 +131,7 @@ const Prompt = () => {
           </div>
         </div>
       </form>
-      {responseSuccess && (
+      {!!responses && responses.length > 0 && (
         <div style={{ marginTop: "2rem" }}>
           <h2>Responses</h2>
           <ResponseList>{listItems}</ResponseList>
