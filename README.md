@@ -8,3 +8,6 @@ Goals:
 - A form for entering text prompts
 - Responses stored in order of newest to oldest
 - Use of environment variables to avoid committing OpenAI's secret API key
+- Save responses if the user leaves or reloads the page
+
+View demo on Replit: https://openai-demo.monicachauhuynh.repl.co/
