@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const InputPrompt = styled.textarea`
-  height: 15vh;
-  width: 60vw;
+  height: 8vh;
+  width: 40vw;
   resize: none;
   font-family: Poppins;
   border: transparent;
@@ -11,7 +11,7 @@ const InputPrompt = styled.textarea`
   padding: 2rem;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   &:focus {
-    outline: gray;
+    outline: none;
   }
 `;
 const SubmitButton = styled.button`
@@ -27,23 +27,33 @@ const SubmitButton = styled.button`
   border-radius: 40px;
 `;
 
+const ResponseList = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const ResponseListItem = styled.li`
+  background: white;
+  margin: 1rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+`;
+
 const Prompt = () => {
   const [formData, setFormData] = useState({});
   const [responseSuccess, setResponseSuccess] = useState(false);
   const [responses, setResponses] = useState([]);
-  let choices = [];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-      temperature: 0.5,
       max_tokens: 64,
+      temperature: 1,
       top_p: 1.0,
       echo: true,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
     });
   };
 
@@ -74,20 +84,32 @@ const Prompt = () => {
       });
 
     const getChoices = async () => {
-      choices = await fetchChoices;
-      setResponses(choices);
-      console.log(choices);
+      let choices = await fetchChoices;
+      setResponses([choices[0], ...responses]);
     };
 
     getChoices();
+
+    console.log(responses);
   };
 
-  const listItems = responses.map((obj) => (
-    <li key={obj.index}>
-      <p>Prompt: {obj.text.split("\n\n")[0]}</p>
-      <p>Response: {obj.text.split("\n\n")[1]}</p>
-    </li>
-  ));
+  const listItems =
+    responses.length > 0 ? (
+      responses.map((obj, idx) => {
+        return (
+          <ResponseListItem key={idx}>
+            <p>
+              <b>Prompt:</b> {obj.text.split("\n\n").shift()}
+            </p>
+            <p>
+              <b>Response:</b> {obj.text.split("\n\n").slice(1).join("")}
+            </p>
+          </ResponseListItem>
+        );
+      })
+    ) : (
+      <span>Awaiting responses</span>
+    );
 
   return (
     <div>
@@ -111,7 +133,7 @@ const Prompt = () => {
       {responseSuccess && (
         <div style={{ marginTop: "2rem" }}>
           <h2>Responses</h2>
-          <ul>{listItems}</ul>
+          <ResponseList>{listItems}</ResponseList>
         </div>
       )}
     </div>
