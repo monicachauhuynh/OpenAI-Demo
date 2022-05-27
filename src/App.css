@@ -7,9 +7,27 @@
 }
 
 .main {
-  background: whitesmoke;
-  flex-grow: 1;
-  overflow: 100%;
+  background: linear-gradient(
+    -45deg,
+    rgb(191, 224, 251) 0%,
+    rgb(232, 233, 251) 25.8%,
+    rgb(252, 239, 250) 50.8%,
+    rgb(234, 251, 251) 77.6%,
+    rgb(240, 251, 244) 100.7%
+  );
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite;
   padding: 3.5rem;
-  display: flex;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

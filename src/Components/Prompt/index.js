@@ -5,7 +5,7 @@ const InputPrompt = styled.textarea`
   height: 8vh;
   width: 40vw;
   resize: none;
-  font-family: Poppins;
+  font-family: Manrope;
   border: transparent;
   border-radius: 20px;
   padding: 2rem;
@@ -17,14 +17,18 @@ const InputPrompt = styled.textarea`
 const SubmitButton = styled.button`
   height: 2rem;
   width: 8rem;
-  font-family: Poppins;
+  font-family: Manrope;
   text-align: center;
-  color: whitesmoke;
+  color: white;
   background: #383838;
   align-self: center;
   border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
+  &:hover {
+    color: #383838;
+    background: lightgreen;
+  }
 `;
 
 const ResponseList = styled.ul`
@@ -36,8 +40,14 @@ const ResponseList = styled.ul`
 const ResponseListItem = styled.li`
   background: white;
   margin: 1rem;
-  padding: 1.5rem;
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
   border-radius: 20px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  color: #383838;
+  &:hover {
+    background: whitesmoke;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const Prompt = () => {
@@ -63,7 +73,6 @@ const Prompt = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
     const requestOptions = {
       method: "POST",
       headers: {
@@ -90,8 +99,6 @@ const Prompt = () => {
     };
 
     getChoices();
-
-    console.log(responses);
   };
 
   const listItems =
@@ -116,8 +123,8 @@ const Prompt = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <h1>Fun with AI</h1>
-          <label>Enter Prompt</label>
+          <h1>Fun with OpenAI</h1>
+          <label>Send the AI a prompt!</label>
           <div style={{ marginTop: "1rem" }}>
             <InputPrompt
               id="prompt"
@@ -127,7 +134,7 @@ const Prompt = () => {
             ></InputPrompt>
           </div>
           <div style={{ marginTop: "1rem" }}>
-            <SubmitButton id="submitButton">SUBMIT</SubmitButton>
+            <SubmitButton id="submitButton">SEND</SubmitButton>
           </div>
         </div>
       </form>
