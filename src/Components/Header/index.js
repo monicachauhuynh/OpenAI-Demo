@@ -22,10 +22,11 @@ const Header = () => {
     <StyledHeader>
       <a
         className="navbar-brand"
-        href="https://github.com/monicachauhuynh/OpenAI-Demo"
+        href="https://openai.com/api/"
         target="_blank"
+        rel="noreferrer"
       >
-        View Git Repository
+        Powered by OpenAI GPT-3
       </a>
     </StyledHeader>
   );

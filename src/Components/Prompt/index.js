@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+const Container = styled.div`
+  padding: 4rem;
+  height: 100vh;
+  width: 100vw;
+`;
+
 const InputPrompt = styled.textarea`
   height: 8vh;
   width: 40vw;
@@ -20,14 +26,14 @@ const SubmitButton = styled.button`
   font-family: Manrope;
   text-align: center;
   color: white;
-  background: #383838;
+  background: black;
   align-self: center;
   border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
   &:hover {
-    color: #383838;
-    background: lightgreen;
+    color: black;
+    background: white;
   }
 `;
 
@@ -43,7 +49,7 @@ const ResponseListItem = styled.li`
   padding: 0.5rem 1.5rem 0.5rem 1.5rem;
   border-radius: 20px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  color: #383838;
+  color: black;
   &:hover {
     background: whitesmoke;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -120,11 +126,11 @@ const Prompt = () => {
     );
 
   return (
-    <div>
+    <Container>
       <form onSubmit={handleSubmit}>
         <div>
-          <h1>Fun with OpenAI</h1>
-          <label>Send the AI a prompt!</label>
+          <h1>Send Curie a Prompt</h1>
+          <label>Enter Prompt</label>
           <div style={{ marginTop: "1rem" }}>
             <InputPrompt
               id="prompt"
@@ -144,7 +150,7 @@ const Prompt = () => {
           <ResponseList>{listItems}</ResponseList>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

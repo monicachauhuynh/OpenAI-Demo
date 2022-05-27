@@ -17,7 +17,6 @@
   );
   background-size: 400% 400%;
   animation: gradient 8s ease infinite;
-  padding: 3.5rem;
 }
 
 @keyframes gradient {
