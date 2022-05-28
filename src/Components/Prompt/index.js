@@ -1,68 +1,79 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 4rem;
   height: 100vh;
   width: 100vw;
 `;
 
-const InputPrompt = styled.textarea`
-  height: 8vh;
-  width: 40vw;
-  resize: none;
-  font-family: Manrope;
-  border: transparent;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  &:focus {
-    outline: none;
-  }
-`;
-const SubmitButton = styled.button`
-  height: 2rem;
-  width: 8rem;
-  font-family: Manrope;
-  text-align: center;
-  color: white;
-  background: black;
-  align-self: center;
-  border: none;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  &:hover {
-    color: black;
-    background: white;
-  }
-`;
-
-const ResponseList = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-`;
-
-const ResponseListItem = styled.li`
-  background: white;
-  margin: 1rem;
-  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  color: black;
-  &:hover {
-    background: whitesmoke;
+const InputPrompt = styled.div`
+  margin-top: 3rem;
+  textarea {
+    height: 8vh;
+    width: 40vw;
+    resize: none;
+    font-family: Manrope;
+    border: transparent;
+    border-radius: 20px;
+    padding: 2rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
-const Prompt = () => {
+const SubmitButton = styled.div`
+  margin-top: 1rem;
+  button {
+    height: 2rem;
+    width: 8rem;
+    font-family: Manrope;
+    text-align: center;
+    color: white;
+    background: black;
+    align-self: center;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+    &:hover {
+      color: black;
+      background: white;
+    }
+  }
+`;
+
+const ResponseList = styled.div`
+  margin-top: 3rem;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0.5rem 4rem 0.5rem 4rem;
+    text-align: left;
+  }
+  li {
+    background: white;
+    margin: 1rem;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    color: black;
+    &:hover {
+      background: whitesmoke;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+`;
+
+const Prompt = ({ scroll }) => {
   const persistResponses = JSON.parse(localStorage.getItem("responses")) || [];
   const [formData, setFormData] = useState({});
   const [responses, setResponses] = useState(persistResponses);
+  const promptRef = useRef();
 
   useEffect(() => {
     localStorage.setItem("responses", JSON.stringify(responses));
+    if (scroll) promptRef.current.scrollIntoView({ behavior: "smooth" });
   });
 
   const handleInputChange = (e) => {
@@ -111,44 +122,44 @@ const Prompt = () => {
     responses.length > 0 ? (
       responses.map((obj, idx) => {
         return (
-          <ResponseListItem key={idx}>
+          <li key={idx}>
             <p>
               <b>Prompt:</b> {obj.text.split("\n\n").shift()}
             </p>
             <p>
               <b>Response:</b> {obj.text.split("\n\n").slice(1).join("")}
             </p>
-          </ResponseListItem>
+          </li>
         );
       })
     ) : (
-      <span>Awaiting responses</span>
+      <span>Awaiting Responses</span>
     );
 
   return (
-    <Container>
+    <Container ref={promptRef}>
       <form onSubmit={handleSubmit}>
         <div>
-          <h1>Send Curie a Prompt</h1>
-          <label>Enter Prompt</label>
-          <div style={{ marginTop: "1rem" }}>
-            <InputPrompt
+          
+          <InputPrompt>
+          <h1>Send Curie a Prompt!</h1>
+            <textarea
               id="prompt"
               name="prompt"
               onChange={handleInputChange}
               value={formData.prompt}
-            ></InputPrompt>
-          </div>
-          <div style={{ marginTop: "1rem" }}>
-            <SubmitButton id="submitButton">SEND</SubmitButton>
-          </div>
+            ></textarea>
+          </InputPrompt>
+          <SubmitButton>
+            <button id="submitButton">SEND</button>
+          </SubmitButton>
         </div>
       </form>
       {!!responses && responses.length > 0 && (
-        <div style={{ marginTop: "2rem" }}>
+        <ResponseList>
           <h2>Responses</h2>
-          <ResponseList>{listItems}</ResponseList>
-        </div>
+          <ul>{listItems}</ul>
+        </ResponseList>
       )}
     </Container>
   );

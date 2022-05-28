@@ -54,14 +54,16 @@ const StyledViewButton = styled.button`
   }
 `;
 
-const Landing = () => {
+const Landing = ({ handleScroll }) => {
   return (
     <StyledLanding>
       <h1>Curie</h1>
       <label>Enter plain text prompts, get AI's responses.</label>
       <label>OpenAI’s API provides access to GPT-3.</label>
       <div style={{ marginTop: "2rem" }}>
-        <StyledTryButton>TRY NOW</StyledTryButton>
+        <StyledTryButton onClick={() => handleScroll(true)}>
+          TRY NOW
+        </StyledTryButton>
         <StyledViewButton>
           <a
             href="https://github.com/monicachauhuynh/OpenAI-Demo"
