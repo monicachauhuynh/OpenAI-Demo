@@ -1,56 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { StyledButton } from "../Button";
 
 const StyledLanding = styled.div`
-  height: 100vh;
-  width: 100vw;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
   h1 {
     font-size: 6.5rem;
     margin: 2rem !important;
   }
-  label {
+  p {
     font-size: 1rem;
-  }
-`;
-
-const StyledTryButton = styled.button`
-  height: 2.5rem;
-  width: 10rem;
-  font-family: Manrope;
-  text-align: center;
-  color: white;
-  background: black;
-  align-self: center;
-  border: none;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  margin: 0.2rem;
-  &:hover {
-    color: black;
-    background: white;
-  }
-`;
-
-const StyledViewButton = styled.button`
-  height: 2.5rem;
-  width: 10rem;
-  font-family: Manrope;
-  text-align: center;
-  color: black;
-  background: transparent;
-  align-self: center;
-  border: none;
-  margin: 0.2rem;
-  &:hover {
-    font-weight: bold;
-  }
-  a {
-    text-decoration: none;
+    margin: 0.2rem;
   }
 `;
 
@@ -58,13 +17,13 @@ const Landing = ({ handleScroll }) => {
   return (
     <StyledLanding>
       <h1>Curie</h1>
-      <label>Enter plain text prompts, get AI's responses.</label>
-      <label>OpenAI’s API provides access to GPT-3.</label>
+      <p>Enter plain text prompts, get AI's responses.</p>
+      <p>OpenAI’s API provides access to GPT-3.</p>
       <div style={{ marginTop: "2rem" }}>
-        <StyledTryButton onClick={() => handleScroll(true)}>
+        <StyledButton onClick={() => handleScroll(true)} primary>
           TRY NOW
-        </StyledTryButton>
-        <StyledViewButton>
+        </StyledButton>
+        <StyledButton>
           <a
             href="https://github.com/monicachauhuynh/OpenAI-Demo"
             target="_blank"
@@ -72,7 +31,7 @@ const Landing = ({ handleScroll }) => {
           >
             VIEW GITHUB
           </a>
-        </StyledViewButton>
+        </StyledButton>
       </div>
     </StyledLanding>
   );

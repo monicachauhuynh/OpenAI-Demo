@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledHeader = styled.nav`
-  background-color: transparent;
+  background-color: white;
   min-height: 1.7rem;
   width: 100%;
   text-align: center;
   align-items: center;
-  margin-top: 0.5rem;
+  padding-top: 0.2rem;
   a {
     font-size: 0.8rem;
     text-decoration: none;

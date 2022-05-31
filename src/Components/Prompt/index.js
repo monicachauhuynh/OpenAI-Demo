@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { StyledButton } from "../Button";
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
-`;
-
-const InputPrompt = styled.div`
+const StyledInputPrompt = styled.div`
   margin-top: 3rem;
   textarea {
     height: 8vh;
@@ -23,27 +19,7 @@ const InputPrompt = styled.div`
   }
 `;
 
-const SubmitButton = styled.div`
-  margin-top: 1rem;
-  button {
-    height: 2rem;
-    width: 8rem;
-    font-family: Manrope;
-    text-align: center;
-    color: white;
-    background: black;
-    align-self: center;
-    border: none;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
-    &:hover {
-      color: black;
-      background: white;
-    }
-  }
-`;
-
-const ResponseList = styled.div`
+const StyledResponseList = styled.div`
   margin-top: 3rem;
   ul {
     list-style-type: none;
@@ -52,6 +28,7 @@ const ResponseList = styled.div`
     text-align: left;
   }
   li {
+    word-wrap: break-word;
     background: white;
     margin: 1rem;
     padding: 0.5rem 1.5rem 0.5rem 1.5rem;
@@ -137,31 +114,28 @@ const Prompt = ({ scroll }) => {
     );
 
   return (
-    <Container ref={promptRef}>
+    <div ref={promptRef}>
       <form onSubmit={handleSubmit}>
         <div>
-          
-          <InputPrompt>
-          <h1>Send Curie a Prompt!</h1>
+          <StyledInputPrompt>
+            <h1>Send Curie a Prompt!</h1>
             <textarea
               id="prompt"
               name="prompt"
               onChange={handleInputChange}
               value={formData.prompt}
             ></textarea>
-          </InputPrompt>
-          <SubmitButton>
-            <button id="submitButton">SEND</button>
-          </SubmitButton>
+          </StyledInputPrompt>
+          <StyledButton primary>SEND</StyledButton>
         </div>
       </form>
       {!!responses && responses.length > 0 && (
-        <ResponseList>
+        <StyledResponseList>
           <h2>Responses</h2>
           <ul>{listItems}</ul>
-        </ResponseList>
+        </StyledResponseList>
       )}
-    </Container>
+    </div>
   );
 };
 
